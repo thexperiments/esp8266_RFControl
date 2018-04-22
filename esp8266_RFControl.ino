@@ -31,7 +31,11 @@ WiFiClient espClient;
 std::unique_ptr<ESP8266WebServer> server;
 
 void handleRoot() {
-  server->send(200, "text/plain", "hello from esp8266!");
+  String current_url = "http://" + WiFi.localIP().toString() + "/receive";
+  String message = "<html><body>\n\n";
+  message += "To receive signals go to <a href='" + current_url + "' location='blank'>" + current_url + "</a>\n";
+  message += "</body></html>";
+  server->send(200, "text/html", message);
 }
 
 void handleNotFound() {
